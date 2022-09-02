@@ -16,7 +16,7 @@ const displayItem = async(category)=>{
     const itemField = document.getElementById('display-item');
     itemField.textContent = "";
     itemInfo.forEach(item =>{
-        console.log(item);
+        //console.log(item);
         const {title,thumbnail_url,details,author} = item;
         const div = document.createElement("div");
         div.innerHTML = `
@@ -41,7 +41,9 @@ const displayItem = async(category)=>{
                   <p class="fs-6"> <i class="fa-regular fa-eye"></i>  ${item.total_view}</p>
                   </div>
                   <div>
-                  <button type="button" class="btn btn-primary">See Datails</button>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  See Datail
+</button>
                   </div>
                   </div>
                 </div>
@@ -54,7 +56,7 @@ const displayItem = async(category)=>{
 
     })
 } 
-//displayItem('01');
+//displayItem('02');
 
 const displayCatagory= async()=>{
 const categoryData = await newsData();
@@ -67,8 +69,21 @@ categoryData.forEach(item => {
     div.innerHTML = `
     <a href="" class="fs-6 text-decoration-none">${item.category_name}</a>
     `;
-    itemContainer.appendChild(div);
     displayItem(item.category_id);
+    itemContainer.appendChild(div);
+    //displayItem(item.category_id);
+    //displayItem('03');
 });
 }
 displayCatagory();
+const detailData= async()=>{
+    const url = `https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a`;
+    const res = await fetch(url);
+    const data = await res.json();
+     return data.data;
+    }
+    const displayDataildata=async()=>{
+        const dataDetail = await detailData();
+        console.log(dataDetail); 
+    }
+    displayDataildata();
