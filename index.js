@@ -13,10 +13,15 @@ const itemData = async(category)=>{
 //itemFound();
 const displayItem = async(category)=>{
     const itemInfo = await itemData(category);
+    console.log(itemInfo);
     const itemField = document.getElementById('display-item');
     itemField.textContent = "";
-    itemInfo.forEach(item =>{
-        console.log(item);
+    const itemCountField = document.getElementById("item-count");
+    itemCountField.innerText ='';
+    itemCountField.innerText = itemInfo.length;
+    console.log(itemInfo.length);
+    itemInfo.forEach((item) =>{
+       // console.log(item,count);
         const {title,thumbnail_url,details,author} = item;
         const div = document.createElement("div");
         div.innerHTML = `
@@ -56,24 +61,21 @@ const displayItem = async(category)=>{
 
     })
 } 
-//displayItem('05');
+displayItem('03');
 
 const displayCatagory= async()=>{
 const categoryData = await newsData();
-console.log(categoryData);
+//console.log(categoryData);
 const itemContainer = document.getElementById('item-category');
 itemContainer.textContent = "";
 categoryData.forEach(item => {
     //console.log(item);
     const div = document.createElement('div');
     div.innerHTML = `
-    <a  href="" class="fs-6 text-decoration-none">${item.category_name}</a>
+    <h3 onclick="displayItem('${item.category_id?item.category_id:'Category not found'}')"  class="fs-6 text-decoration-none">${item.category_name}</h3>
     `;
     itemContainer.appendChild(div);
-    itemContainer.addEventListener('click',function(){
-        console.log(this.parentNode);
-        displayItem(item.category_id);
-    })
+    
     //displayItem('03');
     //console.log(displayItem(item.category_id));
 });
