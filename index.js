@@ -43,14 +43,14 @@ const displayItem = async(category)=>{
         div.innerHTML = `
         <div class="card mb-3">
             <div class="row g-0">
-              <div class="col-md-4">
+              <div class="col-md-4 col-sm-12">
                 <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="...">
               </div>
-              <div class="col-md-8">
+              <div class="col-md-8 col-sm-12">
                 <div class="card-body">
                   <h5 class="card-title">${title}</h5>
                   <p class="card-text">${details.length > 300 ? details.slice(0,300) + "...": title}</p>
-                  <div class= "d-flex justify-content-between align-content-center mt-3">
+                  <div class= "d-flex justify-content-between align-content-center mt-3 flex-sm-column flex-column">
                   <div class="d-flex">
                   <img src="${author.img}" class=" author-img" alt="...">
                   <div>
@@ -78,7 +78,7 @@ const displayItem = async(category)=>{
 
     })
 } 
-//displayItem('03');
+displayItem('03');
 
 const displayCatagory= async()=>{
 const categoryData = await newsData();
@@ -89,7 +89,7 @@ categoryData.forEach(item => {
     //console.log(item);
     const div = document.createElement('div');
     div.innerHTML = `
-    <h3 onclick="displayItem('${item.category_id}');toggleSpinner(${true})"  class="fs-6 text-decoration-none">${item.category_name}</h3>
+    <h3 onclick="displayItem('${item.category_id}')"  class="fs-6 text-decoration-none">${item.category_name}</h3>
     `;
     itemContainer.appendChild(div);
     
@@ -115,7 +115,7 @@ const detailData= async(id)=>{
         <h6>${items.title}</h6>
         <img src="${items.image_url}" class="img-fluid rounded-start" alt="...">
         <p>${items.details}</p>
-        <div class="d-flex">
+        <div class="d-flex flex-sm-column">
                   <img src="${items.author.img}" class=" author-img" alt="...">
                   <div>
                   <h3 class="fs-6">${items.author.name?items.author.name:'No author name'}<h3>
