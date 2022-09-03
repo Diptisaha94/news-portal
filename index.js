@@ -36,7 +36,7 @@ const displayItem = async(category)=>{
     }else{
       itemCountField.innerText = "No";
     }
-    console.log(itemInfo.length);
+    //console.log(itemInfo.length);
     itemInfo.forEach((item) =>{
        // console.log(item,count);
         const {title,thumbnail_url,details,author} = item;
@@ -49,7 +49,7 @@ const displayItem = async(category)=>{
               </div>
               <div class="col-md-8 col-sm-12">
                 <div class="card-body">
-                  <h5 class="card-title">${title}</h5>
+                  <h5 class="card-title">${title?title:'No title'}</h5>
                   <p class="card-text">${details.length > 400 ? details.slice(0,400) + "...": details}</p>
                   <div class= "d-flex flex-lg-row justify-content-between align-content-center mt-3 flex-md-row flex-column">
                   <div class="d-flex">
@@ -78,7 +78,6 @@ const displayItem = async(category)=>{
     })
     toggleSpinner(false);
 } 
-//displayItem('03');
 
 const displayCatagory= async()=>{
 const categoryData = await newsData();
@@ -86,15 +85,11 @@ const categoryData = await newsData();
 const itemContainer = document.getElementById('item-category');
 itemContainer.textContent = "";
 categoryData.forEach(item => {
-    //console.log(item);
     const div = document.createElement('div');
     div.innerHTML = `
-    <h3 onclick="displayItem('${item.category_id}')"  class="fs-6 text-decoration-none">${item.category_name}</h3>
+    <h3 onclick="displayItem('${item.category_id}')"  class="fs-6">${item.category_name}</h3>
     `;
     itemContainer.appendChild(div);
-    
-    //displayItem('03');
-    //console.log(displayItem(item.category_id));
 });
 }
 displayCatagory();
@@ -105,16 +100,13 @@ const detailData= async(id)=>{
     displayDataildata(data.data[0]);
     }
     const displayDataildata=(items)=>{
-        //const {title} = dataDetail;
-        //console.log(items);
         const modal = document.getElementById('modal');
         modal.textContent="";
-       //items.forEach(item =>{
         const div = document.createElement('div');
         div.innerHTML=`
-        <h6>${items.title}</h6>
-        <img src="${items.image_url}" class="img-fluid rounded-start" alt="...">
-        <p>${items.details}</p>
+        <h6>${items.title?items.title:'No title'}</h6>
+        <img src="${items.image_url?items.image_url:'No image'}" class="img-fluid rounded-start" alt="...">
+        <p>${items.details?items.details:'No datails'}</p>
         <div class="d-flex flex-sm-column">
                   <img src="${items.author.img?items.author.img:'not found'}" class=" author-img" alt="...">
                   <div>
@@ -125,7 +117,6 @@ const detailData= async(id)=>{
 
         `
         modal.appendChild(div);
-      // })
     }
     const toggleSpinner = isLoading => {
       const spinerSection = document.getElementById('spinner');
