@@ -94,10 +94,16 @@ categoryData.forEach(item => {
 }
 displayCatagory();
 const detailData= async(id)=>{
+  const message = document.getElementById('err');
+  message.innerHTML = "";
+try{
     const url = `https://openapi.programming-hero.com/api/news/${id}`;
     const res = await fetch(url);
     const data = await res.json();
     displayDataildata(data.data[0]);
+}catch(error){
+    message.innerHTML = "Input is " + error;
+  }
     }
     const displayDataildata=(items)=>{
         const modal = document.getElementById('modal');
