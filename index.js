@@ -25,7 +25,8 @@ try{
 //itemFound();
 const displayItem = async(category)=>{
     const itemInfo = await itemData(category);
-    console.log(itemInfo); 
+    //console.log(itemInfo); 
+    toggleSpinner(true);
     const itemField = document.getElementById('display-item');
     itemField.textContent = "";
     const itemCountField = document.getElementById("item-count");
@@ -44,18 +45,18 @@ const displayItem = async(category)=>{
         <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-4 col-sm-12">
-                <img src="${thumbnail_url}" class="img-fluid rounded-start" alt="...">
+                <img src="${thumbnail_url?thumbnail_url:'No picture here'}" class="img-fluid rounded-start" alt="...">
               </div>
               <div class="col-md-8 col-sm-12">
                 <div class="card-body">
                   <h5 class="card-title">${title}</h5>
-                  <p class="card-text">${details.length > 300 ? details.slice(0,300) + "...": title}</p>
-                  <div class= "d-flex justify-content-between align-content-center mt-3 flex-sm-column flex-column">
+                  <p class="card-text">${details.length > 400 ? details.slice(0,400) + "...": details}</p>
+                  <div class= "d-flex flex-lg-row justify-content-between align-content-center mt-3 flex-md-row flex-column">
                   <div class="d-flex">
-                  <img src="${author.img}" class=" author-img" alt="...">
+                  <img src="${author.img?author.img:'image missing'}" class=" author-img" alt="...">
                   <div>
                   <h3 class="fs-6">${author.name?author.name:'No author name'}<h3>
-                  <p class="fs-6">${author.published_date}</p>
+                  <p class="fs-6">${author.published_date?author.published_date:'no date'}</p>
                   </div> 
                   </div>
                   <div>
@@ -74,11 +75,10 @@ const displayItem = async(category)=>{
         
         `;
         itemField.appendChild(div);
-        toggleSpinner(false);
-
     })
+    toggleSpinner(false);
 } 
-displayItem('03');
+//displayItem('03');
 
 const displayCatagory= async()=>{
 const categoryData = await newsData();
@@ -116,7 +116,7 @@ const detailData= async(id)=>{
         <img src="${items.image_url}" class="img-fluid rounded-start" alt="...">
         <p>${items.details}</p>
         <div class="d-flex flex-sm-column">
-                  <img src="${items.author.img}" class=" author-img" alt="...">
+                  <img src="${items.author.img?items.author.img:'not found'}" class=" author-img" alt="...">
                   <div>
                   <h3 class="fs-6">${items.author.name?items.author.name:'No author name'}<h3>
                   <p class="fs-6">${items.author.published_date?items.author.published_date:"No date publish"}</p>
