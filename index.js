@@ -16,7 +16,7 @@ const displayItem = async(category)=>{
     const itemField = document.getElementById('display-item');
     itemField.textContent = "";
     itemInfo.forEach(item =>{
-        //console.log(item);
+        console.log(item);
         const {title,thumbnail_url,details,author} = item;
         const div = document.createElement("div");
         div.innerHTML = `
@@ -56,23 +56,26 @@ const displayItem = async(category)=>{
 
     })
 } 
-//displayItem('02');
+//displayItem('05');
 
 const displayCatagory= async()=>{
 const categoryData = await newsData();
-//console.log(categoryData);
+console.log(categoryData);
 const itemContainer = document.getElementById('item-category');
 itemContainer.textContent = "";
 categoryData.forEach(item => {
     //console.log(item);
     const div = document.createElement('div');
     div.innerHTML = `
-    <a href="" class="fs-6 text-decoration-none">${item.category_name}</a>
+    <a  href="" class="fs-6 text-decoration-none">${item.category_name}</a>
     `;
-    displayItem(item.category_id);
     itemContainer.appendChild(div);
-    //displayItem(item.category_id);
+    itemContainer.addEventListener('click',function(){
+        console.log(this.parentNode);
+        displayItem(item.category_id);
+    })
     //displayItem('03');
+    //console.log(displayItem(item.category_id));
 });
 }
 displayCatagory();
@@ -84,7 +87,7 @@ const detailData= async(id)=>{
     }
     const displayDataildata=(items)=>{
         //const {title} = dataDetail;
-        console.log(items);
+        //console.log(items);
         const modal = document.getElementById('modal');
         modal.textContent="";
        //items.forEach(item =>{
