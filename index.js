@@ -41,7 +41,7 @@ const displayItem = async(category)=>{
                   <p class="fs-6"> <i class="fa-regular fa-eye"></i>  ${item.total_view}</p>
                   </div>
                   <div>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button onclick="detailData('${item._id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   See Datail
 </button>
                   </div>
@@ -76,14 +76,25 @@ categoryData.forEach(item => {
 });
 }
 displayCatagory();
-const detailData= async()=>{
-    const url = `https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a`;
+const detailData= async(id)=>{
+    const url = `https://openapi.programming-hero.com/api/news/${id}`;
     const res = await fetch(url);
     const data = await res.json();
-     return data.data;
+    displayDataildata(data.data[0]);
     }
-    const displayDataildata=async()=>{
-        const dataDetail = await detailData();
-        console.log(dataDetail); 
+    const displayDataildata=(items)=>{
+        //const {title} = dataDetail;
+        console.log(items);
+        const modal = document.getElementById('modal');
+        modal.textContent="";
+       //items.forEach(item =>{
+        const div = document.createElement('div');
+        div.innerHTML=`
+        <h6>${items.title}</h6>
+        <img src="${items.image_url}" class="img-fluid rounded-start" alt="...">
+        <p>${items.details}</p>
+        `
+        modal.appendChild(div);
+      // })
     }
-    displayDataildata();
+    
